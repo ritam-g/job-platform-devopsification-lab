@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { verifyJWT } from "./src/middlewares/auth.middleware.js";
+import { checkDatabase, checkEnv } from "./src/utils/healthChecks.js";
 
 const app = express()
 
@@ -18,6 +19,40 @@ app.use(cookieParser())
 
 app.get("/", (req, res) => {
     res.send("Api-gateway is running")
+})
+
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        service: "api-gateway",
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString()
+  });
+})
+
+app.get("/ready", async(req, res) => {
+    const services = {
+        database: "unknown",
+        env: "unknown"
+    };
+    try {
+        await checkDatabase();
+        services.database = "ok";
+
+        await checkEnv();
+        services.env = "ok";
+
+        res.status(200).json({
+            status: "ready",
+            services
+        });
+    } catch (error) {
+        res.status(503).json({
+            status: "not ready",
+            services,
+            error: error.message
+        });
+    }
 })
 
 app.use("/api/user/profile", verifyJWT, 
