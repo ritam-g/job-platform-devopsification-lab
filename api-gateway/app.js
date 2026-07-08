@@ -8,10 +8,10 @@ import { checkDatabase, checkEnv } from "./src/utils/healthChecks.js";
 const app = express()
 
 const corsOptions = {
-  origin: "http://localhost:3000", // your frontend address
-  credentials: true, // allow cookies and headers like authorization
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allowed methods
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // allowed headers
+    origin: process.env.FRONTEND_URL, // your frontend address
+    credentials: true, // allow cookies and headers like authorization
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allowed methods
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // allowed headers
 };
 
 app.use(cors(corsOptions))
@@ -27,10 +27,10 @@ app.get("/health", (req, res) => {
         service: "api-gateway",
         uptime: process.uptime(),
         timestamp: new Date().toISOString()
-  });
+    });
 })
 
-app.get("/ready", async(req, res) => {
+app.get("/ready", async (req, res) => {
     const services = {
         database: "unknown",
         env: "unknown"
@@ -55,9 +55,9 @@ app.get("/ready", async(req, res) => {
     }
 })
 
-app.use("/api/user/profile", verifyJWT, 
+app.use("/api/user/profile", verifyJWT,
     (req, res, next) => {
-        if(req.user) {
+        if (req.user) {
             req.headers['x-user'] = JSON.stringify(req.user)
         }
         next()
@@ -75,9 +75,9 @@ app.use("/api/user/profile", verifyJWT,
     })
 )
 
-app.use("/api/job", verifyJWT, 
+app.use("/api/job", verifyJWT,
     (req, res, next) => {
-        if(req.user) {
+        if (req.user) {
             req.headers['x-user'] = JSON.stringify(req.user)
         }
         next()
@@ -95,9 +95,9 @@ app.use("/api/job", verifyJWT,
     })
 )
 
-app.use("/api/application", verifyJWT, 
+app.use("/api/application", verifyJWT,
     (req, res, next) => {
-        if(req.user) {
+        if (req.user) {
             req.headers['x-user'] = JSON.stringify(req.user)
         }
         next()
@@ -115,9 +115,9 @@ app.use("/api/application", verifyJWT,
     })
 )
 
-app.use("/api/interview", verifyJWT, 
+app.use("/api/interview", verifyJWT,
     (req, res, next) => {
-        if(req.user) {
+        if (req.user) {
             req.headers['x-user'] = JSON.stringify(req.user)
         }
         next()
@@ -135,9 +135,9 @@ app.use("/api/interview", verifyJWT,
     })
 )
 
-app.use("/api/notification", verifyJWT, 
+app.use("/api/notification", verifyJWT,
     (req, res, next) => {
-        if(req.user) {
+        if (req.user) {
             req.headers['x-user'] = JSON.stringify(req.user)
         }
         next()
@@ -155,9 +155,9 @@ app.use("/api/notification", verifyJWT,
     })
 )
 
-app.use("/api/chat", verifyJWT, 
+app.use("/api/chat", verifyJWT,
     (req, res, next) => {
-        if(req.user) {
+        if (req.user) {
             req.headers['x-user'] = JSON.stringify(req.user)
         }
         next()
@@ -183,5 +183,5 @@ import googleRouter from "./src/routes/google.route.js"
 
 app.use("/api/user", authRouter)
 app.use("/api/auth", googleRouter)
-  
+
 export default app
