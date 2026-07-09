@@ -4,7 +4,7 @@ import cors from "cors"
 const app = express()
 
 const corsOptions = {
-  origin: "http://localhost:3000", // your frontend address
+  origin: process.env.FRONTEND_URL, // your frontend address
   credentials: true, // allow cookies and headers like authorization
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allowed methods
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // allowed headers
@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    res.send("User-profile server is running")
+  res.send("User-profile server is running")
 })
 
 import profileRouter from "./src/routes/profile.route.js"

@@ -1,0 +1,113 @@
+{
+  "apps": [
+    {
+      "name": "api-gateway",
+      "interpreter": "node",
+      "cwd": "/opt/node/job-platform-devopsification-lab/api-gateway",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "300M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS Z",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "user-profile-service",
+      "interpreter": "node",
+      "cwd": "/opt/node/job-platform-devopsification-lab/user-profile-service",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "300M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS Z",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "job-service",
+      "interpreter": "node",
+      "cwd": "/opt/node/job-platform-devopsification-lab/job-service",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "300M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS Z",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "application-service",
+      "interpreter": "node",
+      "cwd": "/opt/node/job-platform-devopsification-lab/application-service",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "300M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS Z",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "interview-service",
+      "interpreter": "node",
+      "cwd": "/opt/node/job-platform-devopsification-lab/interview-service",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "300M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS Z",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "chat-service",
+      "interpreter": "node",
+      "cwd": "/opt/node/job-platform-devopsification-lab/chat-service",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "300M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS Z",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "notification-service",
+      "interpreter": "node",
+      "cwd": "/opt/node/job-platform-devopsification-lab/notification-service",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "instances": 1,
+      "autorestart": true,
+      "watch": false,
+      "max_memory_restart": "300M",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss.SSS Z",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}
+
+
+
+

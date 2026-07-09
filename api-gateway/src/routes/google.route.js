@@ -6,7 +6,7 @@ import { createCalendarEvent, deleteCalendarEvent, updateCalendarEvent } from ".
 
 const router = Router()
 
-const generateAccessAndRefreshToken = async(userId) => {
+const generateAccessAndRefreshToken = async (userId) => {
     try {
         const user = await User.findById(userId)
 
@@ -38,11 +38,11 @@ router.get("/google", (req, res) => {
     res.redirect(url)
 })
 
-router.get("/google/callback", async(req, res) => {
+router.get("/google/callback", async (req, res) => {
     const code = req.query.code
 
-    if(!code) {
-        return res.status(400).json({messsgae: "Missing Code"})
+    if (!code) {
+        return res.status(400).json({ messsgae: "Missing Code" })
     }
 
     const { tokens } = await oAuth2Client.getToken(code)
@@ -53,17 +53,17 @@ router.get("/google/callback", async(req, res) => {
 
     const { email, name } = data
 
-    if(!email || !name) {
-        return res.status(400).json({messsgae: "Email or name is missing"})
+    if (!email || !name) {
+        return res.status(400).json({ messsgae: "Email or name is missing" })
     }
 
     let user = await User.findOne({ email })
 
     if (!user) {
         user = await User.create({
-          name,
-          email,
-          password: "google-oauth",
+            name,
+            email,
+            password: "google-oauth",
         });
     }
 
@@ -76,14 +76,14 @@ router.get("/google/callback", async(req, res) => {
     await user.save({ validateBeforeSave: false })
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
-    
+
     const loggedInUser = await User.findById(user._id).select(
         "-password -refreshToken -google"
     )
 
     const options = {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         sameSite: "none",
         path: "/"
     };

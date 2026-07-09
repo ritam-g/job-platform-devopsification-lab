@@ -5,6 +5,7 @@ import http from "http"
 import connectDb from "./src/db/index.js";
 import { Server } from "socket.io";
 import { chatSocketHandler } from "./src/sockets/chat.js";
+import { connectRabbitMQ } from "./src/utils/rabbitmq.js";
 
 const server = http.createServer(app)
 const io = new Server(server, {

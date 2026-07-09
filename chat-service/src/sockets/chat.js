@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
-import { Message } from "../models/message.model"
-import { publishToQueue } from "../utils/rabbitmq"
+import { Message } from "../models/message.model.js"
+import { publishToQueue } from "../utils/rabbitmq.js"
 
 export const chatSocketHandler = (io) => {
     io.use((socket, next) => {
