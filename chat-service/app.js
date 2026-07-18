@@ -18,7 +18,9 @@ app.get("/", (req, res) => {
 })
 
 import messageRouter from "./src/routes/message.route.js"
+import internalRoute from "./src/routes/internal.route.js"
 
 app.use("/api/chat", messageRouter)
+app.use("/api/internal/messages", internalRoute)
 
-export default app 
+export default app
