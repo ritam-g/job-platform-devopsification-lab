@@ -1,10 +1,9 @@
 import amqp from "amqplib"
-import { getIO } from "../sockets/socketInstance.js"
 import { Notification } from "../models/notification.model.js"
+import { notifyGateway } from "../utils/notifyGateway.js"
 
-export const consumeNotifications = async(req, res) => {
+export const consumeNotifications = async () => {
     const connection = await amqp.connect(process.env.RABBITMQ_URI)
-
     const channel = await connection.createChannel()
 
     const queue = 'notifications'
@@ -15,16 +14,19 @@ export const consumeNotifications = async(req, res) => {
 
     console.log("Waiting for messages in queue...")
 
-    channel.consume(queue, async(msg) => {
+    channel.consume(queue, async (msg) => {
         try {
             const payload = JSON.parse(msg.content.toString())
-
             const { userId, message, type, metadata } = payload
 
             const notification = await Notification.create({ userId, message, type, metadata })
 
-            const io = getIO()
-            io.to(userId).emit('newNotification', notification)
+            // 🆕 Socket ki jagah — api-gateway ko HTTP call, wo real-time push karega
+            await notifyGateway({
+                userId,
+                event: "newNotification",
+                payload: notification
+            })
 
             channel.ack(msg)
             console.log(`Notification sent to user ${userId}`)

@@ -3,7 +3,7 @@ import axios from "axios"
 const notificationServiceApi = axios.create({
     baseURL: process.env.NOTIFICATION_SERVICE_URL, // e.g. http://localhost:5003
     headers: {
-        "x-internal-secret": process.env.INTERNAL_SECRET
+        "x-internal-secret": process.env.INTERNAL_SERVICE_SECRET
     }
 })
 

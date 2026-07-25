@@ -68,13 +68,6 @@ const createNotification = async (req, res) => {
 
         const notification = await Notification.create({ userId, message, type, metadata })
 
-        try {
-            const io = getIO()
-            io.to(userId).emit('newNotification', notification)
-        } catch (socketError) {
-            console.log("Socket emit skipped/failed:", socketError.message)
-        }
-
         return res.status(201).json({
             message: "Notification created successfully",
             notification
@@ -84,6 +77,7 @@ const createNotification = async (req, res) => {
         return res.status(500).json({ error: error.message })
     }
 }
+
 
 export {
     getNotificationsByUserId,
