@@ -18,7 +18,9 @@ app.get("/", (req, res) => {
 })
 
 import notificationRouter from "./src/routes/notification.route.js"
+import internalRoutes from "./src/routes/internal.route.js"
 
 app.use("/api/notification", notificationRouter)
+app.use("/api/internal/notifications", internalRoutes)
 
 export default app

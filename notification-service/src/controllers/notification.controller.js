@@ -56,7 +56,37 @@ const markNotificationRead = async (req, res) => {
     }
 }
 
+
+// Called internally by api-gateway (e.g. from chat-service events)
+const createNotification = async (req, res) => {
+    try {
+        const { userId, message, type, metadata } = req.body
+
+        if (!userId || !message) {
+            return res.status(400).json({ message: "userId and message are required" })
+        }
+
+        const notification = await Notification.create({ userId, message, type, metadata })
+
+        try {
+            const io = getIO()
+            io.to(userId).emit('newNotification', notification)
+        } catch (socketError) {
+            console.log("Socket emit skipped/failed:", socketError.message)
+        }
+
+        return res.status(201).json({
+            message: "Notification created successfully",
+            notification
+        })
+    } catch (error) {
+        console.log("Create notification error:", error)
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 export {
     getNotificationsByUserId,
-    markNotificationRead
+    markNotificationRead,
+    createNotification
 }
