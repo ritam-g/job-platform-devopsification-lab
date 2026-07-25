@@ -1,5 +1,13 @@
 import { Router } from "express";
-import { applyJob, deleteApplication, getApplicationByIdWithCandidate, getApplicationByIdWithRecruiter, getApplicationCountsForRecruiter, getCandidateApplication, getJobApplication, getRecentApplicantsForRecruiter, getTotalApplicantsForRecruiter, updateApplication } from "../controllers/application.controller.js";
+import {
+    applyJob, deleteApplication,
+    getApplicationByIdWithCandidate, getApplicationByIdWithRecruiter,
+    getApplicationCountsForRecruiter, getCandidateApplication,
+    getJobApplication, getRecentApplicantsForRecruiter,
+    getTotalApplicantsForRecruiter, updateApplication,
+    createNotificationInternal
+
+} from "../controllers/application.controller.js";
 
 const router = Router()
 
@@ -13,5 +21,6 @@ router.route("/:id/candidate").get(getApplicationByIdWithCandidate)
 router.route("/recruiter/job-counts").get(getApplicationCountsForRecruiter)
 router.route("/:id").put(updateApplication)
 router.route("/:id").delete(deleteApplication)
+router.post("/internal/create", internalAuth, createNotificationInternal);
 
 export default router

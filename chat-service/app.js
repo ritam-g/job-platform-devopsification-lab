@@ -4,10 +4,10 @@ import cors from "cors";
 const app = express()
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL, // your frontend address
-  credentials: true, // allow cookies and headers like authorization
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allowed methods
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // allowed headers
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
 };
 
 app.use(cors(corsOptions))
@@ -18,7 +18,9 @@ app.get("/", (req, res) => {
 })
 
 import messageRouter from "./src/routes/message.route.js"
+import internalRoute from "./src/routes/internal.route.js"
 
 app.use("/api/chat", messageRouter)
+app.use("/api/internal/messages", internalRoute)
 
-export default app 
+export default app
